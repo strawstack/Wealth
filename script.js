@@ -1,5 +1,5 @@
 
-const WIDTH_BODY = 800;
+const WIDTH_BODY = 1000;
 const HEIGHT_BODY = 1200;
 
 // Create SVG
@@ -8,7 +8,7 @@ d3.select("body")
         .attr("width", WIDTH_BODY)
         .attr("height", HEIGHT_BODY)
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", `0 0 ${WIDTH_BODY} ${HEIGHT_BODY}`);
+        .attr("viewBox", `0 0 900 1200`);
 
 function createCircle(d3, data) {
     return d3.select("svg")
@@ -136,6 +136,10 @@ function swap() {
 setTimeout(() => {
     swap();
     setInterval(swap, 1000 + 1000 + 500 + 1000 + 500 + 500);
+}, 500);
+
+setTimeout(() => {
+    document.querySelector(".description").style.opacity = 0.6;
 }, 500);
 
 // helpers
