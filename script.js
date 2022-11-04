@@ -1,14 +1,11 @@
-
-const WIDTH_BODY = 1000;
-const HEIGHT_BODY = 1200;
+const WIDTH_SVG = 720;
+const HEIGHT_SVG = 1280;
 
 // Create SVG
 d3.select("body")
     .append("svg")
-        .attr("width", WIDTH_BODY)
-        .attr("height", HEIGHT_BODY)
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", `0 0 900 1200`);
+        .attr("viewBox", `0 0 ${WIDTH_SVG} ${HEIGHT_SVG}`);
 
 function createCircle(d3, data) {
     return d3.select("svg")
@@ -36,26 +33,23 @@ const RECT_HEIGHT = 20;
 const RECT_V_GAP = 5;
 const RECT_CIRCLE_V_GAP = 20;
 
-const COLUMN_INTER_SPACE = 50;
+const COLUMN_INTER_SPACE = 20;
 
-//const max_render_height = 2 * CIRCLE_RADIUS + RECT_CIRCLE_V_GAP + 5 * 10 * (RECT_HEIGHT + RECT_V_GAP);
+const LEFT_RIGHT_MARGIN = 20;
+const BOTTOM_MARGIN = 50;
 
-const BOTTOM_MARGIN = 100;
-
-const CIRCLE_Y_LEVEL = HEIGHT_BODY - BOTTOM_MARGIN;
+const CIRCLE_Y_LEVEL = HEIGHT_SVG - BOTTOM_MARGIN;
 
 const circle_count = 10;
 const rect_start_count = 5;
 const render_width = circle_count * (2 * CIRCLE_RADIUS) + (circle_count - 1) * COLUMN_INTER_SPACE;
-
-const LEFT_MARGIN = WIDTH_BODY / 2 - render_width / 2;
 
 let circles = [];
 let rectangles = [];
 for (let i = 0; i < circle_count; i++) {
     circles.push(
         createCircle(d3, {
-            x: (COLUMN_INTER_SPACE + 2 * CIRCLE_RADIUS) * i + LEFT_MARGIN + CIRCLE_RADIUS,
+            x: (COLUMN_INTER_SPACE + 2 * CIRCLE_RADIUS) * i + LEFT_RIGHT_MARGIN + CIRCLE_RADIUS,
             y: CIRCLE_Y_LEVEL,
             r: CIRCLE_RADIUS
         })
@@ -65,7 +59,7 @@ for (let i = 0; i < circle_count; i++) {
     for (let j = 0; j < rect_start_count; j++) {
         lst.push(
             createRect(d3, {
-                x: (COLUMN_INTER_SPACE + RECT_WIDTH) * i + LEFT_MARGIN,
+                x: (COLUMN_INTER_SPACE + RECT_WIDTH) * i + LEFT_RIGHT_MARGIN,
                 y: CIRCLE_Y_LEVEL - CIRCLE_RADIUS - RECT_HEIGHT - RECT_CIRCLE_V_GAP - (RECT_HEIGHT + RECT_V_GAP) * j,
                 w: RECT_WIDTH,
                 h: RECT_HEIGHT
@@ -114,20 +108,20 @@ function swap() {
         // Move rect up
         rect.transition()
             .duration(1000)
-            .attr("y", CIRCLE_Y_LEVEL - 25 - 20 - 20 - 25 * (highest + 1 + i + offset));
+            .attr("y", CIRCLE_Y_LEVEL - CIRCLE_RADIUS - RECT_HEIGHT - RECT_CIRCLE_V_GAP - 25 * (highest + 1 + i + offset));
         
         // Move rect sideways
         setTimeout(() => {
             rect.transition()
                 .duration(1000)
-                .attr("x", 100 * d + LEFT_MARGIN);
+                .attr("x", (COLUMN_INTER_SPACE + RECT_WIDTH) * d + LEFT_RIGHT_MARGIN);
         }, 1000 + 500);
 
         // Move down
         setTimeout(() => {
             rect.transition()
                 .duration(1000)
-                .attr("y", CIRCLE_Y_LEVEL - 25 - 20 - 20 - 25 * (rectangles[d].length));
+                .attr("y", CIRCLE_Y_LEVEL - CIRCLE_RADIUS - RECT_HEIGHT - RECT_CIRCLE_V_GAP- 25 * (rectangles[d].length));
             rectangles[d].push(rect);
         }, 1000 + 1000 + 500 + 500);
     }
