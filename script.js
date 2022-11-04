@@ -4,6 +4,7 @@ const HEIGHT_SVG = 1280;
 // Create SVG
 d3.select("body")
     .append("svg")
+        .attr("width", "100%")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", `0 0 ${WIDTH_SVG} ${HEIGHT_SVG}`);
 
@@ -14,7 +15,6 @@ function createCircle(d3, data) {
         .attr("cy", data.y)
         .attr("r", data.r)
         .style("fill", "salmon");
-
 }
 
 function createRect(d3, data) {
@@ -24,6 +24,7 @@ function createRect(d3, data) {
         .attr('y', data.y)
         .attr('width', data.w)
         .attr('height', data.h)
+        .attr('rx', 3)
         .attr('fill', '#69a3b2');
 }
 
